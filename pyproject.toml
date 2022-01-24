@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "fastapi sendbox"
+version = "0.1.0"
+description = "fastapi sendbox"
+authors = ["koevgeny10"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "*"
+uvicorn = "*"
+sqlalchemy = "*"
+alembic = "*"
+psycopg2 = "^2.9"
+requests = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+pre-commit = "*"
+tenacity = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
