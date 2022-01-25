@@ -1,14 +1,22 @@
 from fastapi import FastAPI, APIRouter
 
+from fastapi_sandbox.settings import settings
 from fastapi_sandbox.views.readiness import router as readiness_router
-from fastapi_sandbox.views.views import router as views_router
+from fastapi_sandbox.views.entity import router as entity_router
 
-app = FastAPI()
+app = FastAPI(debug=settings.DEBAG)
 
 root_router = APIRouter(prefix="/api")
 
-root_router.include_router(readiness_router)
-root_router.include_router(views_router)
+public_router = APIRouter(prefix="/public")
+private_router = APIRouter(prefix="/private")
+
+private_router.include_router(readiness_router)
+
+public_router.include_router(entity_router)
+
+root_router.include_router(public_router)
+root_router.include_router(private_router)
 
 app.include_router(root_router)
 

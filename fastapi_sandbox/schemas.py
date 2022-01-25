@@ -1,9 +1,24 @@
-from pydantic import BaseModel
+from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
-class SomeModel(BaseModel):
-    id: int
-    a: int
-
+class OrmBaseModel(BaseModel):
     class Config:
         orm_mode = True
+
+
+class IdMixin(OrmBaseModel):
+    id: int
+
+
+class CreateEntityPd(OrmBaseModel):
+    field: int
+
+
+class UpdateEntityPd(OrmBaseModel):
+    field: Optional[int] = Field(None)
+
+
+class EntityPd(IdMixin, CreateEntityPd):
+    pass
