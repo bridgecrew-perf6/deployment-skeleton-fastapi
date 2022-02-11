@@ -3,13 +3,14 @@ version: "3.9"
 services:
   web:
     build: .
+    entrypoint: ["/opt/app/entrypoint.sh"]
     ports:
       - "80:8000"
     env_file: .env
     volumes:
-      - ./fastapi_sandbox:/app/fastapi_sandbox
-      - ./alembic:/app/alembic
-      - ./tests:/app/tests
+      - ./src/fastapi_sandbox:/opt/app/fastapi_sandbox
+      - ./src/alembic:/opt/app/alembic
+      - ./src/tests:/opt/app/tests
     restart: on-failure
     depends_on:
       - db
@@ -38,7 +39,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     volumes:
-      - ./configs/pgadmin4/servers.json:/pgadmin4/servers.json
+      - ./volumes/pgadmin4/servers.json:/pgadmin4/servers.json
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@gmail.com
       PGADMIN_DEFAULT_PASSWORD: admin

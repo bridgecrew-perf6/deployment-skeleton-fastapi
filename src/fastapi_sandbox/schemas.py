@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel, Field
 
 
@@ -17,7 +15,7 @@ class CreateEntityPd(OrmBaseModel):
 
 
 class UpdateEntityPd(OrmBaseModel):
-    field: Optional[int] = Field(None)
+    field: int | None = Field(None)
 
 
 class EntityPd(IdMixin, CreateEntityPd):

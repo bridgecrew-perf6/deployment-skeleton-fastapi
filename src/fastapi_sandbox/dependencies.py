@@ -1,4 +1,4 @@
-from fastapi_sandbox.database import SessionLocal
+from fastapi_sandbox.settings import SessionLocal
 
 
 def get_db():

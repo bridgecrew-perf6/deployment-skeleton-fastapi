@@ -5,7 +5,7 @@ description = "fastapi sendbox"
 authors = ["koevgeny10"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 fastapi = "*"
 uvicorn = "*"
 sqlalchemy = "*"
@@ -17,6 +17,7 @@ requests = "*"
 pytest = "^5.2"
 pre-commit = "*"
 tenacity = "*"
+ipython = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

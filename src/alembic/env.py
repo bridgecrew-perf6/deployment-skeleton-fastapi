@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from fastapi_sandbox.database import SQLALCHEMY_DATABASE_URL
+from fastapi_sandbox.settings import settings
 from fastapi_sandbox.models import Base
 
 # this is the Alembic Config object, which provides
@@ -13,7 +13,9 @@ from fastapi_sandbox.models import Base
 
 config = context.config
 
-config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
+config.set_main_option(
+    "sqlalchemy.url", settings.get_sqlalchemy_database_url()
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

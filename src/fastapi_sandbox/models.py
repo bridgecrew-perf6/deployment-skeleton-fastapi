@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any
 
 from sqlalchemy import Integer, Column
 from sqlalchemy.orm import declarative_base, Session
@@ -15,8 +15,8 @@ class EntityOrm(Base):
 
     @classmethod
     def get_list(
-        cls, db: Session, field: Optional[int] = None
-    ) -> List["EntityOrm"]:
+        cls, db: Session, field: int | None = None
+    ) -> list["EntityOrm"]:
         query = db.query(cls)
         if field is not None:
             query = query.filter(cls.field == field)
@@ -31,7 +31,6 @@ class EntityOrm(Base):
         obj = cls(**entity.dict())
         db.add(obj)
         db.commit()
-        print(obj)
         return obj
 
     @classmethod

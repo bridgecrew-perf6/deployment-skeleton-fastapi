@@ -4,7 +4,7 @@ from fastapi_sandbox.settings import settings
 from fastapi_sandbox.views.readiness import router as readiness_router
 from fastapi_sandbox.views.entity import router as entity_router
 
-app = FastAPI(debug=settings.DEBAG)
+app = FastAPI(debug=settings.DEBUG)
 
 root_router = APIRouter(prefix="/api")
 

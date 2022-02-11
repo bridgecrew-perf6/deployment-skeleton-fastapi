@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query, HTTPException
+from pydantic.types import PositiveInt
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
@@ -19,9 +20,9 @@ def get_entity_list(
 
 
 @router.get("/{pk}")
-def get_entity(pk: int, db: Session = Depends(get_db)) -> EntityPd:
+def get_entity(entity_id: PositiveInt, db: Session = Depends(get_db)) -> EntityPd:
     try:
-        entity = handlers.get_entity(pk, db)
+        entity = handlers.get_entity(entity_id, db)
     except NoResultFound:
         raise HTTPException(status_code=404, detail="not found")
     return entity
@@ -36,17 +37,17 @@ def create_entity(
 
 @router.patch("/{pk}")
 def update_entity(
-    pk: int, entity: UpdateEntityPd, db: Session = Depends(get_db)
+    entity_id: PositiveInt, entity: UpdateEntityPd, db: Session = Depends(get_db)
 ) -> EntityPd:
     try:
-        entity = handlers.update_entity(pk, entity, db)
+        entity = handlers.update_entity(entity_id, entity, db)
     except NoResultFound:
         raise HTTPException(status_code=404, detail="not found")
     return entity
 
 
 @router.delete("/{pk}")
-def delete_entity(pk: int, db: Session = Depends(get_db)) -> None:
-    count = handlers.delete_entity(pk, db)
+def delete_entity(entity_id: PositiveInt, db: Session = Depends(get_db)) -> None:
+    count = handlers.delete_entity(entity_id, db)
     if count == 0:
         raise HTTPException(status_code=404, detail="not found")

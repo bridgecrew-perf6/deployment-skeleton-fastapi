@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
 from tenacity import retry, stop_after_delay
 
-from fastapi_sandbox.database import engine
+from fastapi_sandbox.settings import engine
 from fastapi_sandbox.main import app
 from fastapi_sandbox.models import Base
 
