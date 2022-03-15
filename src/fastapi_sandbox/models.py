@@ -3,7 +3,7 @@ from typing import Any
 from sqlalchemy import Integer, Column
 from sqlalchemy.orm import declarative_base, Session
 
-from fastapi_sandbox.schemas import CreateEntityPd, UpdateEntityPd
+from fastapi_sandbox.schemas import EntityCreatePd, EntityUpdatePd
 
 Base: Any = declarative_base()
 
@@ -27,7 +27,7 @@ class EntityOrm(Base):
         return db.query(cls).filter(cls.id == pk).one()
 
     @classmethod
-    def create(cls, entity: CreateEntityPd, db: Session) -> "EntityOrm":
+    def create(cls, entity: EntityCreatePd, db: Session) -> "EntityOrm":
         obj = cls(**entity.dict())
         db.add(obj)
         db.commit()
@@ -35,7 +35,7 @@ class EntityOrm(Base):
 
     @classmethod
     def update(
-        cls, pk: int, entity: UpdateEntityPd, db: Session
+        cls, pk: int, entity: EntityUpdatePd, db: Session
     ) -> "EntityOrm":
         obj = db.query(cls).filter(cls.id == pk).one()
         obj.field = entity.field

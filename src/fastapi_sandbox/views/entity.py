@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from fastapi import APIRouter, Depends, Query, HTTPException
 from pydantic.types import PositiveInt
 from sqlalchemy.exc import NoResultFound
@@ -7,20 +5,20 @@ from sqlalchemy.orm import Session
 
 from fastapi_sandbox.dependencies import get_db
 from fastapi_sandbox.handlers import entity as handlers
-from fastapi_sandbox.schemas import EntityPd, CreateEntityPd, UpdateEntityPd
+from fastapi_sandbox.schemas import EntityCreatePd, EntityReadPd, EntityUpdatePd
 
 router = APIRouter(prefix="/entity", tags=["entity"])
 
 
-@router.get("/list", response_model=List[EntityPd])
+@router.get("/list", response_model=list[EntityReadPd])
 def get_entity_list(
-    field: Optional[int] = Query(None), db: Session = Depends(get_db)
-) -> List[EntityPd]:
+    field: int | None = Query(None), db: Session = Depends(get_db)
+) -> list[EntityReadPd]:
     return handlers.get_entity_list(db, field)
 
 
 @router.get("/{pk}")
-def get_entity(entity_id: PositiveInt, db: Session = Depends(get_db)) -> EntityPd:
+def get_entity(entity_id: PositiveInt, db: Session = Depends(get_db)) -> EntityReadPd:
     try:
         entity = handlers.get_entity(entity_id, db)
     except NoResultFound:
@@ -28,17 +26,17 @@ def get_entity(entity_id: PositiveInt, db: Session = Depends(get_db)) -> EntityP
     return entity
 
 
-@router.post("/", response_model=EntityPd, status_code=201)
+@router.post("/", response_model=EntityReadPd, status_code=201)
 def create_entity(
-    entity: CreateEntityPd, db: Session = Depends(get_db)
-) -> EntityPd:
+    entity: EntityCreatePd, db: Session = Depends(get_db)
+) -> EntityReadPd:
     return handlers.create_entity(entity, db)
 
 
 @router.patch("/{pk}")
 def update_entity(
-    entity_id: PositiveInt, entity: UpdateEntityPd, db: Session = Depends(get_db)
-) -> EntityPd:
+    entity_id: PositiveInt, entity: EntityUpdatePd, db: Session = Depends(get_db)
+) -> EntityReadPd:
     try:
         entity = handlers.update_entity(entity_id, entity, db)
     except NoResultFound:

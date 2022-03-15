@@ -50,7 +50,6 @@ USER app
 ENV PATH="/home/app/.local/bin:${PATH}"
 
 COPY --from=builder /$WHEELS_DIR/ /$WHEELS_DIR
-
 RUN pip install --no-cache /$WHEELS_DIR/*
-COPY src/tests ./tests
-COPY src/fastapi_sandbox ./fastapi_sandbox
+
+COPY ./src .

@@ -1,8 +1,10 @@
 version: "3.9"
 
 services:
-  web:
+  app:
     build: .
+    image: fastapi_sandbox:latest
+    container_name: fastapi_sandbox
     entrypoint: ["/opt/app/entrypoint.sh"]
     ports:
       - "80:8000"
@@ -28,6 +30,7 @@ services:
 
   db:
     image: postgres:14
+#    container_name: ${POSTGRES_HOST}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
