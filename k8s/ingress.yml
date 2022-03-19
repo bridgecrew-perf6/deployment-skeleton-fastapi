@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastapi-sandbox-ingress
+  labels:
+    project: education
+    app: fastapi_sandbox
+spec:
+  rules:
+    - host: fastapi.sandbox
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fastapi-sandbox-service
+                port:
+                  number: 80

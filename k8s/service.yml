@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-sandbox-service
+  labels:
+    project: education
+    app: fastapi_sandbox
+spec:
+  type: NodePort
+  ports:
+  - name: main
+    port: 80
+    targetPort: main
+  selector:
+    app: fastapi_sandbox

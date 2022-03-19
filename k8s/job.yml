@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fastapi-sandbox-migrate-job
+  labels:
+    project: education
+    app: fastapi_sandbox
+    for: migrate
+spec:
+  selector:
+    matchExpressions:
+      - key: for
+        operator: In
+        values:
+        – migrate
+  template:
+    spec:
+      restartPolicy: OnFailure
+      hostNetwork: true
+      containers:
+      - name: migrate
+        image: koevgeny10/fastapi_sandbox
+        command: [ "/bin/bash" ]
+        args: [ "-c", "alembic upgrade head" ]
+        env:
+          - name: DEBUG
+            value: "true"
+          - name: POSTGRES_USER
+            value: "postgres"
+          - name: POSTGRES_PASSWORD
+            value: "postgres"
+          - name: POSTGRES_DB
+            value: "postgres"
+          - name: POSTGRES_HOST
+            value: "host.minikube.internal"
+          - name: POSTGRES_PORT
+            value: "5432"
